@@ -1,0 +1,25 @@
+{
+  "name": "yezhi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "yezhi": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvzhifu/yezhi-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lvzhifu/yezhi-cli/issues"
+  },
+  "homepage": "https://github.com/lvzhifu/yezhi-cli#readme",
+  "dependencies": {
+    "commander": "^3.0.0"
+  }
+}
