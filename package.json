@@ -1,6 +1,6 @@
 {
-  "name": "yezhi",
-  "version": "1.0.0",
+  "name": "yezhi-cli",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -18,8 +18,45 @@
   "bugs": {
     "url": "https://github.com/lvzhifu/yezhi-cli/issues"
   },
+  "keywords": [
+    "yezhi",
+    "yezhicli"
+  ],
   "homepage": "https://github.com/lvzhifu/yezhi-cli#readme",
   "dependencies": {
-    "commander": "^3.0.0"
-  }
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "autoprefixer": "^9.6.1",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-component": "^1.1.1",
+    "chalk": "^2.4.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "commander": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "cssnano": "^4.1.10",
+    "download-git-repo": "^2.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-html": "^6.0.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "express": "^4.17.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "open": "^6.4.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "ora": "^3.4.0",
+    "postcss-px2rem": "^0.3.0",
+    "shelljs": "^0.8.3",
+    "stats-webpack-plugin": "^0.7.0",
+    "vue-loader": "^15.7.1",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.39.3",
+    "webpack-chain": "^6.0.0",
+    "webpack-dev-server": "^3.8.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "devDependencies": {}
 }
