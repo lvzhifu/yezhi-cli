@@ -21,8 +21,9 @@ config.devtool('source-map')
 config.entry('app').add('./src/index.js').end()
 config.output.path(path.resolve(basPath, `./${configHelp.getBildPaht()}`)).filename('[name].bundle.js').publicPath(configHelp.getPublicPath())
 config.resolve.alias.set('vue$', `vue/dist/vue.esm.js`)
-config.resolve.alias.set('utils', path.join(basPath,'./src/utils'))
 config.resolve.alias.set('@', path.join(basPath, './src'))
+config.resolve.alias.set('@utils', path.join(basPath,'./src/utils'))
+config.resolve.alias.set('@assets', path.join(basPath, './src/assets'))
 /**
  * webpck loader 配置
  */
