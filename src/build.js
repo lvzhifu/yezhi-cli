@@ -24,6 +24,7 @@ config.resolve.alias.set('vue$', `vue/dist/vue.esm.js`)
 config.resolve.alias.set('@', path.join(basPath, './src'))
 config.resolve.alias.set('@utils', path.join(basPath,'./src/utils'))
 config.resolve.alias.set('@assets', path.join(basPath, './src/assets'))
+config.resolve.alias.set('@config', path.join(basPath, './src/config'))
 /**
  * webpck loader 配置
  */
