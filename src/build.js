@@ -54,7 +54,7 @@ config.module.rule('lessload').test(/\.less$/)
   .use('css').loader('css-loader').end()
   .use('postcss').loader('postcss-loader')
     .options({
-      plugins: [require('autoprefixer')({ overrideBrowserslist: ['last 7 versions', 'Android >= 4.0', 'iOS >= 6']}), require('postcss-px2rem')({remUnit: 37.5})]
+      plugins: [require('autoprefixer')({ overrideBrowserslist: configHelp.getBrowser()}), require('postcss-px2rem')({remUnit: configHelp.getRemUnit()})]
     }).end()
   .use('less').loader('less-loader')
     .options({
