@@ -25,7 +25,7 @@ program
   .action((cmd) => {
     process.env.RUN_ENV = cmd.env
     process.env.RUN_MODE = 'serve'
-    // require('../src/server.js')(cmd)
+    require('../src/server.js')(cmd)
   })
 
 program
