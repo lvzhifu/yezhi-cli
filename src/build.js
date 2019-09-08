@@ -10,6 +10,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin') // vue-loade插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // css 提取插件防止包过大
 const optimizeCss = require('optimize-css-assets-webpack-plugin') // css 压缩
 const CopyWebpackPlugin = require('copy-webpack-plugin') // 静态文件复制
+const DefinePlugin = webpack.DefinePlugin
 const basPath = process.cwd() // 基础路径
 const configHelp = new ConfigHelp() // 获取配置项信息
 
@@ -98,6 +99,10 @@ config.plugin('staicCopy').use(CopyWebpackPlugin, [[{
   to: path.join(basPath,`./${configHelp.getBildPaht()}/${configHelp.getAssetsDirectory()}`),
   ignore: ['.*']
 }]])
+
+config.plugin('DefinePlugin').use(DefinePlugin, [{
+  'process.env.RUN_ENV': '\"' + process.env.RUN_ENV + '\"'
+}])
 
 config.plugin('html-create').use(HtmlWebpackPlugin, [{
   template: path.resolve(basPath, './src/index.tp'),

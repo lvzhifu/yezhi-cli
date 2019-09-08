@@ -10,6 +10,7 @@ const WebpackDevServer = require('webpack-dev-server') // 利用webpack
 const open = require('opn') // 打开浏览器用的
 const VueLoaderPlugin = require('vue-loader/lib/plugin') // vue-loade插件
 const CopyWebpackPlugin = require('copy-webpack-plugin') // 静态文件复制
+const DefinePlugin = webpack.DefinePlugin
 const basPath = process.cwd() // 基础路径
 const configHelp = new ConfigHelp() // 获取配置项信息
 /**
@@ -99,6 +100,10 @@ config.plugin('staicCopy').use(CopyWebpackPlugin, [[{
   ignore: ['.*']
 }]])
 
+config.plugin('DefinePlugin').use(DefinePlugin, [{
+  'process.env.RUN_ENV': '\"' + process.env.RUN_ENV + '\"'
+}])
+
 /**
  * 具体执行函数
  *
@@ -106,6 +111,7 @@ config.plugin('staicCopy').use(CopyWebpackPlugin, [[{
 function projectServer (option) {
   let compile = webpack(config.toConfig())
   let serverOption = {
+    historyApiFallback: true,
     contentBase: path.resolve(basPath, `./${configHelp.getBildPaht()}`),
     publicPath: '/',
     hot: true,

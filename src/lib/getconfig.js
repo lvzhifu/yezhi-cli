@@ -34,6 +34,9 @@ class configHelp{
   }
   // 获取build基础路径
   getPublicPath() {
+    if (process.env.RUN_MODE === 'serve') {
+      return '/'
+    }
     return baseconfig.assetsPublicPath || '/'
   }
   // 获取打包文件存放路径

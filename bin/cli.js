@@ -6,8 +6,6 @@ const chalk = require('chalk') // 字体变色chalk
 // console.log(process.cwd())
 // console.log(__filename)
 // console.log(__dirname)
-
-
 program
   .version(require('../package.json').version)
   .usage('<command> [options]')
@@ -23,14 +21,20 @@ program
   .command('serve')
   .description('运行开发服务')
   .option('-o, --open', 'Open browser', false)
+  .option('-e, --env <type>', 'Run time', 'dev')
   .action((cmd) => {
-    require('../src/server.js')(cmd)
+    process.env.RUN_ENV = cmd.env
+    process.env.RUN_MODE = 'serve'
+    // require('../src/server.js')(cmd)
   })
 
 program
   .command('build')
   .description('打包您的服务')
-  .action(() => {
+  .option('-e, --env <type>', 'Run time', 'pro')
+  .action((cmd) => {
+    process.env.RUN_ENV = cmd.env
+    process.env.RUN_MODE = 'build'
     require('../src/build.js')()
   })
 
