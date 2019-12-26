@@ -1,6 +1,6 @@
 const ConfigHelp = require('./lib/getconfig')
 const path = require('path') // 路径处理
-// const chalk = require('chalk') // 字体变颜色
+const chalk = require('chalk') // 字体变颜色
 // const ora = require('ora') // node中的进度条参数
 const webpack = require('webpack') // 打包工具webpack
 const Config  = require('webpack-chain') // webpack 配置文件管理工具
@@ -10,6 +10,7 @@ const WebpackDevServer = require('webpack-dev-server') // 利用webpack
 const open = require('opn') // 打开浏览器用的
 const VueLoaderPlugin = require('vue-loader/lib/plugin') // vue-loade插件
 const CopyWebpackPlugin = require('copy-webpack-plugin') // 静态文件复制
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin') // 优化输出插件管理
 const DefinePlugin = webpack.DefinePlugin
 const basPath = process.cwd() // 基础路径
 const configHelp = new ConfigHelp() // 获取配置项信息
@@ -20,6 +21,7 @@ const config = new Config()
 config.mode('development')
 config.devtool('source-map')
 config.entry('app').add('./src/index.js').end()
+// config.stats('errors-only').end() 这块不懂
 config.output.path(path.resolve(basPath, `./${configHelp.getBildPaht()}`)).filename('[name].bundle.js').publicPath(configHelp.getPublicPath())
 config.resolve.alias.set('vue$', `vue/dist/vue.esm.js`)
 config.resolve.alias.set('@', path.join(basPath, './src'))
@@ -82,8 +84,10 @@ config.module.rule('json').test(/\.json$/).use('json-loader').loader('json-loade
 /**
  * webpack plugin
  */
+// vue-Loader 插件
 config.plugin('vue-load').use(VueLoaderPlugin)
 
+// html文件生产插件
 config.plugin('html-create').use(HtmlWebpackPlugin, [{
   template: path.resolve(basPath, './src/index.tp'),
   templateParameters: {
@@ -92,16 +96,26 @@ config.plugin('html-create').use(HtmlWebpackPlugin, [{
   favicon: 'favicon.ico'
 }])
 
+// 清楚html插件
 config.plugin('clear-html').use(CleanWebpackPlugin)
 
+// 静态文件拷贝插件
 config.plugin('staicCopy').use(CopyWebpackPlugin, [[{
   from: path.resolve(basPath, `./${configHelp.getAssetsDirectory()}`),
   to: path.join(basPath,`./${configHelp.getBildPaht()}/${configHelp.getAssetsDirectory()}`),
   ignore: ['.*']
 }]])
 
+// 全局环境默认对象
 config.plugin('DefinePlugin').use(DefinePlugin, [{
   'process.env.RUN_ENV': '\"' + process.env.RUN_ENV + '\"'
+}])
+
+// 删除编译多余控制台信息
+config.plugin('FriendlyErrorsPlugin').use(FriendlyErrorsWebpackPlugin, [{
+  compilationSuccessInfo: {
+    messages: [`您的应用已运行 http://${configHelp.getUrl()}:${configHelp.getPort()}`]
+  }
 }])
 
 /**
@@ -109,6 +123,7 @@ config.plugin('DefinePlugin').use(DefinePlugin, [{
  *
  */
 function projectServer (option) {
+  console.log(chalk.cyan(' 正在启动开发服务器...\n'))
   let compile = webpack(config.toConfig())
   let serverOption = {
     historyApiFallback: true,
@@ -122,6 +137,7 @@ function projectServer (option) {
   if (configHelp.getProxyTable()) {
     serverOption.proxy = configHelp.getProxyTable()
   }
+  serverOption.quiet = true // 阻止server的输出
   let serverapp = new WebpackDevServer(compile, serverOption)
   serverapp.listen(configHelp.getPort(), configHelp.getUrl(), err => {
     if (err) {

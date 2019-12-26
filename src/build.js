@@ -10,6 +10,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin') // vue-loade插件
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // css 提取插件防止包过大
 const optimizeCss = require('optimize-css-assets-webpack-plugin') // css 压缩
 const CopyWebpackPlugin = require('copy-webpack-plugin') // 静态文件复制
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin') // 优化输出插件管理
+const { runCLI } = require('jest') // 获取jest 测试运行器
 const DefinePlugin = webpack.DefinePlugin
 const basPath = process.cwd() // 基础路径
 const configHelp = new ConfigHelp() // 获取配置项信息
@@ -114,8 +116,26 @@ config.plugin('html-create').use(HtmlWebpackPlugin, [{
 
 config.plugin('clear-html').use(CleanWebpackPlugin)
 
+// 删除编译多余控制台信息
+config.plugin('FriendlyErrorsPlugin').use(FriendlyErrorsWebpackPlugin)
 
 function projectBuild (option) {
+  if (option.test) {
+    runCLI({}, ['tests']).then(obj => {
+
+      if(obj.results.success) {
+        console.log(chalk.green('测试通过允许执行打包'))
+        fileBuild()
+      } else {
+        console.log(chalk.red('测试未通过暂停打包'))
+      }
+    })
+  } else {
+    fileBuild()
+  }
+}
+
+function fileBuild () {
   const spinner = ora('build 开始...')
   spinner.start()
   let compile = webpack(config.toConfig())
