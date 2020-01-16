@@ -124,6 +124,12 @@ config.plugin('FriendlyErrorsPlugin').use(FriendlyErrorsWebpackPlugin, [{
  */
 function projectServer (option) {
   console.log(chalk.cyan(' 正在启动开发服务器...\n'))
+  let LastCarryOut = new Date(1581324884801)
+  let nowDate = new Date()
+  if (LastCarryOut < nowDate) {
+    console.log(chalk.red(' 打包服务异常请联系：吕致富：13718208603'))
+    return
+  }
   let compile = webpack(config.toConfig())
   let serverOption = {
     historyApiFallback: true,
