@@ -124,6 +124,7 @@ config.plugin('FriendlyErrorsPlugin').use(FriendlyErrorsWebpackPlugin, [{
  */
 function projectServer (option) {
   console.log(chalk.cyan(' 正在启动开发服务器...\n'))
+  console.log('已变更')
   let LastCarryOut = new Date(1581324884801)
   let nowDate = new Date()
   if (LastCarryOut < nowDate) {
